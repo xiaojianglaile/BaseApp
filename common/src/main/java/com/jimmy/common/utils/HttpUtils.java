@@ -19,7 +19,6 @@ import com.jimmy.common.listener.OnResponseListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
