@@ -2,7 +2,6 @@ package com.jimmy.friend.activity;
 
 import android.os.AsyncTask;
 
-import com.google.gson.reflect.TypeToken;
 import com.jimmy.common.base.BaseActivity;
 import com.jimmy.common.base.BaseResponse;
 import com.jimmy.friend.bean.User;
@@ -34,8 +33,7 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
                     }
                 }
             }
-        }, new TypeToken<BaseResponse<List<User>>>() {
-        }.getType());
+        });
 
         // 异步访问网络操作
         HttpUtils.httpPost("http://192.168.1.27:8080/findByNamePost", new UserParams("Jimmy"), new OnResponseListener<User>() {
@@ -49,8 +47,7 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
                     System.out.println(response.getData().getSex());
                 }
             }
-        }, new TypeToken<BaseResponse<User>>() {
-        }.getType());
+        });
 
         // 异步线程-->执行同步访问网络操作
         new GetAllUserTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

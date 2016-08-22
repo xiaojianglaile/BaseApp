@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jimmy.common.base.BaseResponse;
 import com.jimmy.common.listener.OnResponseListener;
 
@@ -86,12 +87,13 @@ public class HttpUtils {
      * @param url                请求地址
      * @param onResponseListener 请求回调接口
      */
-    public static <T> void httpGet(String url, final OnResponseListener<T> onResponseListener, final Type type) {
+    public static <T> void httpGet(String url, final OnResponseListener<T> onResponseListener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (onResponseListener != null) {
-                    onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), type));
+                    onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), new TypeToken<BaseResponse<T>>() {
+                    }.getType()));
                 }
             }
         }, new Response.ErrorListener() {
@@ -112,7 +114,7 @@ public class HttpUtils {
      * @param <T>
      * @param <BT>
      */
-    public static <T, BT> void httpPost(String url, BT params, final OnResponseListener<T> onResponseListener, final Type type) {
+    public static <T, BT> void httpPost(String url, BT params, final OnResponseListener<T> onResponseListener) {
         if (params == null)
             return;
         try {
@@ -121,7 +123,8 @@ public class HttpUtils {
                         @Override
                         public void onResponse(JSONObject response) {
                             if (onResponseListener != null) {
-                                onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), type));
+                                onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), new TypeToken<BaseResponse<T>>() {
+                                }.getType()));
                             }
                         }
                     }, new Response.ErrorListener() {
