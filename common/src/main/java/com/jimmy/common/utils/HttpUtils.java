@@ -42,13 +42,14 @@ public class HttpUtils {
      * @param url 请求地址
      * @return 返回数据实体类
      */
-    public static <T> BaseResponse<T> syncHttpGet(String url, Type type) {
+    public static <T> BaseResponse<T> syncHttpGet(String url) {
         try {
             RequestFuture future = RequestFuture.newFuture();
             Gson gson = new Gson();
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, future, future);
             mRequestQueue.add(request);
-            return gson.fromJson(future.get().toString(), type);
+            return gson.fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
+            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             return new BaseResponse();
@@ -64,14 +65,15 @@ public class HttpUtils {
      * @param <BT>
      * @return 返回数据实体类
      */
-    public static <T, BT> BaseResponse<T> syncHttpPost(String url, BT params, Type type) {
+    public static <T, BT> BaseResponse<T> syncHttpPost(String url, BT params) {
         try {
             RequestFuture future = RequestFuture.newFuture();
             Gson gson = new Gson();
             if (params != null) {
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(gson.toJson(params)), future, future);
                 mRequestQueue.add(request);
-                return new Gson().fromJson(future.get().toString(), type);
+                return new Gson().fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
+                }.getType());
             } else {
                 return new BaseResponse();
             }

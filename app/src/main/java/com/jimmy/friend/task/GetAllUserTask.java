@@ -22,7 +22,7 @@ public class GetAllUserTask extends AsyncTask<Void, Void, List<User>> {
 
     @Override
     protected List<User> doInBackground(Void... params) {
-        BaseResponse<List<User>> response = HttpUtils.syncHttpGet("http://192.168.1.27:8080/getAllUser", new TypeToken<BaseResponse<List<User>>>(){}.getType());
+        BaseResponse<List<User>> response = HttpUtils.syncHttpGet("http://192.168.1.27:8080/getAllUser");
         if (response.getCode() == 200) {
             return response.getData();
         } else {
