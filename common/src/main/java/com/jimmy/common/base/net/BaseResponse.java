@@ -1,4 +1,4 @@
-package com.jimmy.common.base;
+package com.jimmy.common.base.net;
 
 /**
  * Created by Jimmy on 2016/7/31.

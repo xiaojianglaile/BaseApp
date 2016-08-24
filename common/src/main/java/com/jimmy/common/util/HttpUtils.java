@@ -1,4 +1,4 @@
-package com.jimmy.common.utils;
+package com.jimmy.common.util;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,7 @@ import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jimmy.common.base.BaseResponse;
+import com.jimmy.common.base.net.BaseResponse;
 import com.jimmy.common.listener.OnResponseListener;
 
 import org.json.JSONException;

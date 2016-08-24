@@ -1,4 +1,4 @@
-package com.jimmy.common.base;
+package com.jimmy.common.base.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

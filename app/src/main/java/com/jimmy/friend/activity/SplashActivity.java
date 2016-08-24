@@ -2,7 +2,7 @@ package com.jimmy.friend.activity;
 
 import android.content.Intent;
 
-import com.jimmy.common.base.BaseActivity;
+import com.jimmy.common.base.app.BaseActivity;
 import com.jimmy.friend.R;
 
 /**

@@ -16,6 +16,9 @@ allprojects {
     repositories {
         jcenter()
     }
+    ext {
+        support_library_version = '23.3.0'
+    }
 }
 
 task clean(type: Delete) {

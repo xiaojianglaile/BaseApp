@@ -2,9 +2,8 @@ package com.jimmy.friend.task;
 
 import android.os.AsyncTask;
 
-import com.google.gson.reflect.TypeToken;
-import com.jimmy.common.base.BaseResponse;
-import com.jimmy.common.utils.HttpUtils;
+import com.jimmy.common.base.net.BaseResponse;
+import com.jimmy.common.util.HttpUtils;
 import com.jimmy.friend.bean.User;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.jimmy.common.listener;
 
-import com.jimmy.common.base.BaseResponse;
+import com.jimmy.common.base.net.BaseResponse;
 
 /**
  * Created by Jimmy on 2016/7/31.

@@ -1,8 +1,8 @@
-package com.jimmy.common.base;
+package com.jimmy.common.base.app;
 
 import android.app.Application;
 
-import com.jimmy.common.utils.HttpUtils;
+import com.jimmy.common.util.HttpUtils;
 
 /**
  * Created by Jimmy on 2016/7/31.

@@ -2,11 +2,11 @@ package com.jimmy.friend.activity;
 
 import android.os.AsyncTask;
 
-import com.jimmy.common.base.BaseActivity;
-import com.jimmy.common.base.BaseResponse;
+import com.jimmy.common.base.app.BaseActivity;
+import com.jimmy.common.base.net.BaseResponse;
 import com.jimmy.friend.bean.User;
 import com.jimmy.common.listener.OnResponseListener;
-import com.jimmy.common.utils.HttpUtils;
+import com.jimmy.common.util.HttpUtils;
 import com.jimmy.friend.R;
 import com.jimmy.friend.params.UserParams;
 import com.jimmy.friend.task.GetAllUserTask;
