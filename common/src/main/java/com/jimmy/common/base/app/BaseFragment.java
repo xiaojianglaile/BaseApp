@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = initContentView();
+        mView = initContentView(inflater, container);
         if (mView == null)
             throw new NullPointerException("Fragment content view is null.");
         return mView;
@@ -53,7 +53,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Nullable
-    protected abstract View initContentView();
+    protected abstract View initContentView(LayoutInflater inflater, @Nullable ViewGroup container);
 
     protected <VT extends View> VT searchViewById(int id) {
         if (mView == null)

@@ -1,6 +1,8 @@
 package com.jimmy.friend.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
 
 import com.jimmy.common.base.app.BaseActivity;
 import com.jimmy.common.base.net.BaseResponse;
@@ -14,11 +16,14 @@ import com.jimmy.friend.task.GetUserTask;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener, GetUserTask.OnGetAllUserListener {
+public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener, GetUserTask.OnGetAllUserListener, View.OnClickListener {
 
     @Override
     protected void bindView() {
         setContentView(R.layout.activity_main);
+
+        searchViewById(R.id.btnGame).setOnClickListener(this);
+        searchViewById(R.id.btnPlayer).setOnClickListener(this);
 
         // 异步访问网络操作
         HttpUtils.httpGet("http://192.168.1.27:8080/getAllUser", new OnResponseListener<List<User>>() {
@@ -78,5 +83,23 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
             System.out.println(user.getAge());
             System.out.println(user.getSex());
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnGame:
+                startTemplate("GameFragment", "Game");
+                break;
+            case R.id.btnPlayer:
+                startTemplate("PlayerFragment", "Player");
+                break;
+        }
+    }
+
+    private void startTemplate(String name, String title) {
+        startActivity(new Intent(this, TemplateActivity.class)
+                .putExtra(TemplateActivity.NAME, name)
+                .putExtra(TemplateActivity.TITLE, title));
     }
 }
