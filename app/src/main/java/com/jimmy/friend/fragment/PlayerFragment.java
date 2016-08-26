@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jimmy.common.base.app.TemplateFragment;
 import com.jimmy.friend.R;
-import com.jimmy.friend.base.TemplateFragment;
 
 /**
  * Created by Jimmy on 2016/8/26 0026.

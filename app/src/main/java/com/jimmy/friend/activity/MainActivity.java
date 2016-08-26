@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.jimmy.common.base.app.BaseActivity;
 import com.jimmy.common.base.net.BaseResponse;
+import com.jimmy.common.util.TemplateUtil;
 import com.jimmy.friend.bean.User;
 import com.jimmy.common.listener.OnResponseListener;
 import com.jimmy.common.util.HttpUtil;
@@ -13,7 +14,6 @@ import com.jimmy.friend.fragment.PlayerFragment;
 import com.jimmy.friend.params.UserParams;
 import com.jimmy.friend.task.GetAllUserTask;
 import com.jimmy.friend.task.GetUserTask;
-import com.jimmy.friend.util.TemplateUtil;
 
 import java.util.HashMap;
 import java.util.List;

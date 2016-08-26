@@ -1,10 +1,10 @@
-package com.jimmy.friend.util;
+package com.jimmy.common.util;
 
 import android.content.Context;
 import android.content.Intent;
 
+import com.jimmy.common.base.app.TemplateActivity;
 import com.jimmy.common.base.param.MapParams;
-import com.jimmy.friend.base.TemplateActivity;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.jimmy.friend.base;
+package com.jimmy.common.base.app;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.jimmy.common.base.app.BaseActivity;
+import com.jimmy.common.R;
 import com.jimmy.common.base.param.MapParams;
 import com.jimmy.common.util.FragmentUtil;
-import com.jimmy.friend.R;
+
 /**
  * Created by Jimmy on 2016/8/26 0026.
  */

@@ -1,6 +1,5 @@
-package com.jimmy.friend.base;
+package com.jimmy.common.base.app;
 
-import com.jimmy.common.base.app.BaseFragment;
 import com.jimmy.common.base.param.MapParams;
 
 import java.util.Map;
