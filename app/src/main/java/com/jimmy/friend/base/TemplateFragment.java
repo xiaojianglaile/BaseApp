@@ -2,7 +2,6 @@ package com.jimmy.friend.base;
 
 import com.jimmy.common.base.app.BaseFragment;
 import com.jimmy.common.base.param.MapParams;
-import com.jimmy.friend.activity.TemplateActivity;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.jimmy.friend.activity;
+package com.jimmy.friend.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

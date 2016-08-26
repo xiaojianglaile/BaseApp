@@ -1,12 +1,10 @@
 package com.jimmy.friend.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 
 import com.jimmy.common.base.app.BaseActivity;
 import com.jimmy.common.base.net.BaseResponse;
-import com.jimmy.common.base.param.MapParams;
 import com.jimmy.friend.bean.User;
 import com.jimmy.common.listener.OnResponseListener;
 import com.jimmy.common.util.HttpUtil;

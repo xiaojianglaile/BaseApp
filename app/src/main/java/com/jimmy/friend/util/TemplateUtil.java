@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jimmy.common.base.param.MapParams;
-import com.jimmy.friend.activity.TemplateActivity;
+import com.jimmy.friend.base.TemplateActivity;
 
 import java.util.Map;
 
