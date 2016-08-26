@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Created by Jimmy on 2016/7/31.
  */
-public class HttpUtils {
+public class HttpUtil {
 
     private static RequestQueue mRequestQueue;
 

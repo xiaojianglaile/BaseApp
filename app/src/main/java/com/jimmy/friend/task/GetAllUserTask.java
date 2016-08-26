@@ -3,7 +3,7 @@ package com.jimmy.friend.task;
 import android.os.AsyncTask;
 
 import com.jimmy.common.base.net.BaseResponse;
-import com.jimmy.common.util.HttpUtils;
+import com.jimmy.common.util.HttpUtil;
 import com.jimmy.friend.bean.User;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class GetAllUserTask extends AsyncTask<Void, Void, List<User>> {
 
     @Override
     protected List<User> doInBackground(Void... params) {
-        BaseResponse<List<User>> response = HttpUtils.syncHttpGet("http://192.168.1.27:8080/getAllUser");
+        BaseResponse<List<User>> response = HttpUtil.syncHttpGet("http://192.168.1.27:8080/getAllUser");
         if (response.getCode() == 200) {
             return response.getData();
         } else {

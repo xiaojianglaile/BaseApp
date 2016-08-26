@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jimmy.common.base.app.BaseFragment;
 import com.jimmy.friend.R;
+import com.jimmy.friend.base.TemplateFragment;
 
 /**
  * Created by Jimmy on 2016/8/26 0026.
  */
-public class PlayerFragment extends BaseFragment {
+public class PlayerFragment extends TemplateFragment {
+
+    public static String NAME = "player.name";
 
     @Nullable
     @Override
@@ -25,6 +27,10 @@ public class PlayerFragment extends BaseFragment {
     protected void bindData() {
         super.bindData();
         TextView tvFragmentName = searchViewById(R.id.tvFragmentName);
-        tvFragmentName.setText("PlayerFragment");
+        if (mParams != null) {
+            tvFragmentName.setText(mParams.get(NAME).toString());
+        } else {
+            tvFragmentName.setText("PlayerFragment");
+        }
     }
 }

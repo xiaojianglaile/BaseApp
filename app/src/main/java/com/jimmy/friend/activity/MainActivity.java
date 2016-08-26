@@ -6,15 +6,20 @@ import android.view.View;
 
 import com.jimmy.common.base.app.BaseActivity;
 import com.jimmy.common.base.net.BaseResponse;
+import com.jimmy.common.base.param.MapParams;
 import com.jimmy.friend.bean.User;
 import com.jimmy.common.listener.OnResponseListener;
-import com.jimmy.common.util.HttpUtils;
+import com.jimmy.common.util.HttpUtil;
 import com.jimmy.friend.R;
+import com.jimmy.friend.fragment.PlayerFragment;
 import com.jimmy.friend.params.UserParams;
 import com.jimmy.friend.task.GetAllUserTask;
 import com.jimmy.friend.task.GetUserTask;
+import com.jimmy.friend.util.TemplateUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener, GetUserTask.OnGetAllUserListener, View.OnClickListener {
 
@@ -26,7 +31,7 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
         searchViewById(R.id.btnPlayer).setOnClickListener(this);
 
         // 异步访问网络操作
-        HttpUtils.httpGet("http://192.168.1.27:8080/getAllUser", new OnResponseListener<List<User>>() {
+        HttpUtil.httpGet("http://192.168.1.27:8080/getAllUser", new OnResponseListener<List<User>>() {
             @Override
             public void onResponse(BaseResponse<List<User>> response) {
                 if (response.getCode() == 200 && response.getData() != null) {
@@ -42,7 +47,7 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
         });
 
         // 异步访问网络操作
-        HttpUtils.httpPost("http://192.168.1.27:8080/findByNamePost", new UserParams("Jimmy"), new OnResponseListener<User>() {
+        HttpUtil.httpPost("http://192.168.1.27:8080/findByNamePost", new UserParams("Jimmy"), new OnResponseListener<User>() {
             @Override
             public void onResponse(BaseResponse<User> response) {
                 System.out.println("---------------------------------");
@@ -89,17 +94,16 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnGame:
-                startTemplate("GameFragment", "Game");
+                TemplateUtil.startTemplate(this, "GameFragment", "Game");
                 break;
             case R.id.btnPlayer:
-                startTemplate("PlayerFragment", "Player");
+                MapParams params = new MapParams();
+                Map<String, Object> map = new HashMap<>();
+                map.put(PlayerFragment.NAME, "Jimmy");
+                params.setParams(map);
+                TemplateUtil.startTemplate(this, "PlayerFragment", "Player", params);
                 break;
         }
     }
 
-    private void startTemplate(String name, String title) {
-        startActivity(new Intent(this, TemplateActivity.class)
-                .putExtra(TemplateActivity.NAME, name)
-                .putExtra(TemplateActivity.TITLE, title));
-    }
 }
