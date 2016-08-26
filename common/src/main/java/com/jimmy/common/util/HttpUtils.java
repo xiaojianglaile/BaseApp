@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,10 +43,44 @@ public class HttpUtils {
      * @return 返回数据实体类
      */
     public static <T> BaseResponse<T> syncHttpGet(String url) {
+        return syncHttpGet(url, null);
+    }
+
+    /**
+     * 同步Get请求
+     *
+     * @param url    请求地址
+     * @param params 请求参数
+     * @return 返回数据实体类
+     */
+    public static <T> BaseResponse<T> syncHttpGet(String url, Map<String, Object> params) {
+        return syncHttpGet(url, params, null);
+    }
+
+
+    /**
+     * 同步Get请求
+     *
+     * @param url     请求地址
+     * @param params  请求参数
+     * @param headers 请求头
+     * @return 返回数据实体类
+     */
+    public static <T> BaseResponse<T> syncHttpGet(String url, Map<String, Object> params, final Map<String, String> headers) {
         try {
+            if (params != null)
+                url = getParamsUrl(url, params);
             RequestFuture future = RequestFuture.newFuture();
             Gson gson = new Gson();
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, future, future);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, future, future) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    if (headers == null)
+                        return super.getHeaders();
+                    else
+                        return headers;
+                }
+            };
             mRequestQueue.add(request);
             return gson.fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
             }.getType());
@@ -55,21 +90,55 @@ public class HttpUtils {
         }
     }
 
+
     /**
      * 同步Post请求
      *
      * @param url    请求地址
      * @param params 请求参数实体类
-     * @param <T>
-     * @param <BT>
      * @return 返回数据实体类
      */
-    public static <T, BT> BaseResponse<T> syncHttpPost(String url, BT params) {
+    public static <T, P> BaseResponse<T> syncHttpPost(String url, P params) {
+        return syncHttpPost(url, null, params);
+    }
+
+    /**
+     * 同步Post请求
+     *
+     * @param url        请求地址
+     * @param pathParams 请求参数
+     * @param params     请求参数实体类
+     * @return 返回数据实体类
+     */
+    public static <T, P> BaseResponse<T> syncHttpPost(String url, Map<String, Object> pathParams, P params) {
+        return syncHttpPost(url, pathParams, null, params);
+    }
+
+    /**
+     * 同步Post请求
+     *
+     * @param url        请求地址
+     * @param pathParams 请求参数
+     * @param headers    请求头
+     * @param params     请求参数实体类
+     * @return 返回数据实体类
+     */
+    public static <T, P> BaseResponse<T> syncHttpPost(String url, Map<String, Object> pathParams, final Map<String, String> headers, P params) {
         try {
+            if (pathParams != null)
+                url = getParamsUrl(url, pathParams);
             RequestFuture future = RequestFuture.newFuture();
             Gson gson = new Gson();
             if (params != null) {
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(gson.toJson(params)), future, future);
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(gson.toJson(params)), future, future) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        if (headers == null)
+                            return super.getHeaders();
+                        else
+                            return headers;
+                    }
+                };
                 mRequestQueue.add(request);
                 return new Gson().fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
                 }.getType());
@@ -82,13 +151,39 @@ public class HttpUtils {
         }
     }
 
+
     /**
      * 异步Get请求
      *
      * @param url                请求地址
      * @param onResponseListener 请求回调接口
      */
-    public static <T> void httpGet(String url, final OnResponseListener<T> onResponseListener) {
+    public static <T> void httpGet(String url, OnResponseListener<T> onResponseListener) {
+        httpGet(url, null, onResponseListener);
+    }
+
+    /**
+     * 异步Get请求
+     *
+     * @param url                请求地址
+     * @param params             请求参数
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T> void httpGet(String url, Map<String, Object> params, final OnResponseListener<T> onResponseListener) {
+        httpGet(url, params, null, onResponseListener);
+    }
+
+    /**
+     * 异步Get请求
+     *
+     * @param url                请求地址
+     * @param params             请求参数
+     * @param headers            请求头
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T> void httpGet(String url, Map<String, Object> params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener) {
+        if (params != null)
+            url = getParamsUrl(url, params);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -102,7 +197,15 @@ public class HttpUtils {
             public void onErrorResponse(VolleyError error) {
                 Log.e("onErrorResponse", "VolleyError.");
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                if (headers == null)
+                    return super.getHeaders();
+                else
+                    return headers;
+            }
+        };
         mRequestQueue.add(request);
     }
 
@@ -110,15 +213,40 @@ public class HttpUtils {
      * 异步Post请求
      *
      * @param url                请求地址
-     * @param params             请求参数
+     * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
-     * @param <T>
-     * @param <BT>
      */
-    public static <T, BT> void httpPost(String url, BT params, final OnResponseListener<T> onResponseListener) {
+    public static <T, P> void httpPost(String url, P params, final OnResponseListener<T> onResponseListener) {
+        httpPost(url, null, params, onResponseListener);
+    }
+
+    /**
+     * 异步Post请求
+     *
+     * @param url                请求地址
+     * @param pathParams         请求参数
+     * @param params             请求参数实体类
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final OnResponseListener<T> onResponseListener) {
+        httpPost(url, pathParams, params, null, onResponseListener);
+    }
+
+    /**
+     * 异步Post请求
+     *
+     * @param url                请求地址
+     * @param pathParams         请求参数
+     * @param headers            请求头
+     * @param params             请求参数实体类
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener) {
         if (params == null)
             return;
         try {
+            if (pathParams != null)
+                url = getParamsUrl(url, pathParams);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(new Gson().toJson(params)),
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -136,9 +264,10 @@ public class HttpUtils {
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
+                    if (headers == null)
+                        return super.getHeaders();
+                    else
+                        return headers;
                 }
             };
             mRequestQueue.add(request);
@@ -148,5 +277,20 @@ public class HttpUtils {
         }
     }
 
+    /**
+     * 获取带参数的Url地址
+     *
+     * @param url    原地址
+     * @param params 参数
+     * @return 带参数的Url地址
+     */
+    private static String getParamsUrl(String url, Map<String, Object> params) {
+        String sbParams = "?";
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            sbParams += "&" + entry.getKey() + "=" + entry.getValue();
+        }
+        sbParams.replaceFirst("&", "");
+        return url + sbParams;
+    }
 
 }
