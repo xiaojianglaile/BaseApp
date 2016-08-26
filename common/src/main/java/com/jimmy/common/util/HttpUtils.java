@@ -291,8 +291,7 @@ public class HttpUtils {
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             sbParams += "&" + entry.getKey() + "=" + entry.getValue();
         }
-        sbParams.replaceFirst("&", "");
-        return url + sbParams;
+        return url + sbParams.replaceFirst("&", "");
     }
 
 }
