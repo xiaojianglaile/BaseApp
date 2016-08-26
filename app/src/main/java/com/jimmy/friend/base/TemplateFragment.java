@@ -15,8 +15,10 @@ public abstract class TemplateFragment extends BaseFragment {
     @Override
     protected void bindData() {
         super.bindData();
-        MapParams params = (MapParams) getArguments().getSerializable(TemplateActivity.PARAMS);
-        if (params != null)
-            mParams = params.getParams();
+        if (getArguments() != null) {
+            MapParams params = (MapParams) getArguments().getSerializable(TemplateActivity.PARAMS);
+            if (params != null)
+                mParams = params.getParams();
+        }
     }
 }
