@@ -1,6 +1,7 @@
 package com.jimmy.friend.activity;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.View;
 
 import com.jimmy.common.base.app.BaseActivity;
@@ -15,9 +16,7 @@ import com.jimmy.friend.params.UserParams;
 import com.jimmy.friend.task.GetAllUserTask;
 import com.jimmy.friend.task.GetUserTask;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener, GetUserTask.OnGetAllUserListener, View.OnClickListener {
 
@@ -95,9 +94,9 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
                 TemplateUtil.startTemplate(this, "GameFragment", "Game");
                 break;
             case R.id.btnPlayer:
-                Map<String, Object> map = new HashMap<>();
-                map.put(PlayerFragment.NAME, "Jimmy");
-                TemplateUtil.startTemplate(this, "PlayerFragment", "Player", map);
+                Bundle bundle = new Bundle();
+                bundle.putString(PlayerFragment.NAME, "Jimmy");
+                TemplateUtil.startTemplate(this, "PlayerFragment", "Player", bundle);
                 break;
         }
     }
