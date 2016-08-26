@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public abstract class TemplateFragment extends BaseFragment {
 
-    protected Map<String, Object> mParams;
+    private Map<String, Object> mParams;
 
     @Override
     protected void initData() {
@@ -22,4 +22,7 @@ public abstract class TemplateFragment extends BaseFragment {
         }
     }
 
+    public Map<String, Object> getParams() {
+        return mParams;
+    }
 }

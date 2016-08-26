@@ -27,8 +27,8 @@ public class PlayerFragment extends TemplateFragment {
     protected void bindData() {
         super.bindData();
         TextView tvFragmentName = searchViewById(R.id.tvFragmentName);
-        if (mParams != null) {
-            tvFragmentName.setText(mParams.get(NAME).toString());
+        if (getParams() != null) {
+            tvFragmentName.setText(getParams().get(NAME).toString());
         } else {
             tvFragmentName.setText("PlayerFragment");
         }
