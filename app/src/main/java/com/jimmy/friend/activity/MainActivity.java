@@ -10,10 +10,11 @@ import com.jimmy.common.util.HttpUtils;
 import com.jimmy.friend.R;
 import com.jimmy.friend.params.UserParams;
 import com.jimmy.friend.task.GetAllUserTask;
+import com.jimmy.friend.task.GetUserTask;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener {
+public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAllUserListener, GetUserTask.OnGetAllUserListener {
 
     @Override
     protected void bindView() {
@@ -51,20 +52,31 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
 
         // 异步线程-->执行同步访问网络操作
         new GetAllUserTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new GetUserTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
     @Override
-    public void onGetAllUserFinished(List<User> user) {
+    public void onGetAllUserFinished(List<User> users) {
         System.out.println("---------------------------------");
-        if (user != null) {
-            for (int i = 0; i < user.size(); i++) {
-                System.out.println(user.get(i).getId());
-                System.out.println(user.get(i).getName());
-                System.out.println(user.get(i).getAge());
-                System.out.println(user.get(i).getSex());
+        if (users != null) {
+            for (int i = 0; i < users.size(); i++) {
+                System.out.println(users.get(i).getId());
+                System.out.println(users.get(i).getName());
+                System.out.println(users.get(i).getAge());
+                System.out.println(users.get(i).getSex());
             }
         }
     }
 
+    @Override
+    public void onGetUserFinished(User user) {
+        System.out.println("---------------------------------");
+        if (user != null) {
+            System.out.println(user.getId());
+            System.out.println(user.getName());
+            System.out.println(user.getAge());
+            System.out.println(user.getSex());
+        }
+    }
 }
