@@ -97,11 +97,9 @@ public class MainActivity extends BaseActivity implements GetAllUserTask.OnGetAl
                 TemplateUtil.startTemplate(this, "GameFragment", "Game");
                 break;
             case R.id.btnPlayer:
-                MapParams params = new MapParams();
                 Map<String, Object> map = new HashMap<>();
                 map.put(PlayerFragment.NAME, "Jimmy");
-                params.setParams(map);
-                TemplateUtil.startTemplate(this, "PlayerFragment", "Player", params);
+                TemplateUtil.startTemplate(this, "PlayerFragment", "Player", map);
                 break;
         }
     }
