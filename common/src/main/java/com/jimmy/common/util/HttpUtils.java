@@ -195,7 +195,9 @@ public class HttpUtils {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("onErrorResponse", "VolleyError.");
+                if (onResponseListener != null) {
+                    onResponseListener.onError();
+                }
             }
         }) {
             @Override
@@ -259,7 +261,9 @@ public class HttpUtils {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("onErrorResponse", "VolleyError.");
+                    if (onResponseListener != null) {
+                        onResponseListener.onError();
+                    }
                 }
             }) {
                 @Override
