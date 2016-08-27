@@ -35,9 +35,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void bindView();
 
-    /**
-     * 请求动态数据
-     */
     protected void initData() {
 
     }

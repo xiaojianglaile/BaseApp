@@ -9,13 +9,14 @@ import com.jimmy.common.listener.OnTaskFinishedListener;
  */
 public abstract class BaseAsyncTask<T> extends AsyncTask<Void, Void, T> {
 
-    private OnTaskFinishedListener<T> mOnTaskFinishedListener;
+    protected OnTaskFinishedListener<T> mOnTaskFinishedListener;
 
     public BaseAsyncTask(OnTaskFinishedListener<T> onTaskFinishedListener) {
         mOnTaskFinishedListener = onTaskFinishedListener;
     }
 
-    public abstract T loadInBackground();
+    @Override
+    protected abstract T doInBackground(Void... params);
 
     @Override
     protected void onPostExecute(T data) {

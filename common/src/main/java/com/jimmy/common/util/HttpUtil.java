@@ -19,6 +19,7 @@ import com.jimmy.common.listener.OnResponseListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
@@ -40,8 +41,8 @@ public class HttpUtil {
      * @param url 请求地址
      * @return 返回数据实体类
      */
-    public static <T> BaseResponse<T> syncHttpGet(String url) {
-        return syncHttpGet(url, null);
+    public static <T> T syncHttpGet(String url, Type type) {
+        return syncHttpGet(url, null, type);
     }
 
     /**
@@ -51,10 +52,9 @@ public class HttpUtil {
      * @param params 请求参数
      * @return 返回数据实体类
      */
-    public static <T> BaseResponse<T> syncHttpGet(String url, Map<String, Object> params) {
-        return syncHttpGet(url, params, null);
+    public static <T> T syncHttpGet(String url, Map<String, Object> params, Type type) {
+        return syncHttpGet(url, params, null, type);
     }
-
 
     /**
      * 同步Get请求
@@ -62,9 +62,10 @@ public class HttpUtil {
      * @param url     请求地址
      * @param params  请求参数
      * @param headers 请求头
+     * @param type    实体类类型
      * @return 返回数据实体类
      */
-    public static <T> BaseResponse<T> syncHttpGet(String url, Map<String, Object> params, final Map<String, String> headers) {
+    public static <T> T syncHttpGet(String url, Map<String, Object> params, final Map<String, String> headers, Type type) {
         try {
             if (params != null)
                 url = getParamsUrl(url, params);
@@ -80,11 +81,10 @@ public class HttpUtil {
                 }
             };
             mRequestQueue.add(request);
-            return gson.fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
-            }.getType());
+            return gson.fromJson(future.get().toString(), type);
         } catch (Exception e) {
             e.printStackTrace();
-            return new BaseResponse();
+            return null;
         }
     }
 
@@ -96,8 +96,8 @@ public class HttpUtil {
      * @param params 请求参数实体类
      * @return 返回数据实体类
      */
-    public static <T, P> BaseResponse<T> syncHttpPost(String url, P params) {
-        return syncHttpPost(url, null, params);
+    public static <T, P> T syncHttpPost(String url, P params, Type type) {
+        return syncHttpPost(url, null, params, type);
     }
 
     /**
@@ -108,8 +108,8 @@ public class HttpUtil {
      * @param params     请求参数实体类
      * @return 返回数据实体类
      */
-    public static <T, P> BaseResponse<T> syncHttpPost(String url, Map<String, Object> pathParams, P params) {
-        return syncHttpPost(url, pathParams, null, params);
+    public static <T, P> T syncHttpPost(String url, Map<String, Object> pathParams, P params, Type type) {
+        return syncHttpPost(url, pathParams, null, params, type);
     }
 
     /**
@@ -121,7 +121,7 @@ public class HttpUtil {
      * @param params     请求参数实体类
      * @return 返回数据实体类
      */
-    public static <T, P> BaseResponse<T> syncHttpPost(String url, Map<String, Object> pathParams, final Map<String, String> headers, P params) {
+    public static <T, P> T syncHttpPost(String url, Map<String, Object> pathParams, final Map<String, String> headers, P params, Type type) {
         try {
             if (pathParams != null)
                 url = getParamsUrl(url, pathParams);
@@ -138,14 +138,13 @@ public class HttpUtil {
                     }
                 };
                 mRequestQueue.add(request);
-                return new Gson().fromJson(future.get().toString(), new TypeToken<BaseResponse<T>>() {
-                }.getType());
+                return new Gson().fromJson(future.get().toString(), type);
             } else {
-                return new BaseResponse();
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new BaseResponse();
+            return null;
         }
     }
 
@@ -156,8 +155,8 @@ public class HttpUtil {
      * @param url                请求地址
      * @param onResponseListener 请求回调接口
      */
-    public static <T> void httpGet(String url, OnResponseListener<T> onResponseListener) {
-        httpGet(url, null, onResponseListener);
+    public static <T> void httpGet(String url, OnResponseListener<T> onResponseListener, Type type) {
+        httpGet(url, null, onResponseListener, type);
     }
 
     /**
@@ -167,8 +166,8 @@ public class HttpUtil {
      * @param params             请求参数
      * @param onResponseListener 请求回调接口
      */
-    public static <T> void httpGet(String url, Map<String, Object> params, final OnResponseListener<T> onResponseListener) {
-        httpGet(url, params, null, onResponseListener);
+    public static <T> void httpGet(String url, Map<String, Object> params, final OnResponseListener<T> onResponseListener, Type type) {
+        httpGet(url, params, null, onResponseListener, type);
     }
 
     /**
@@ -179,15 +178,14 @@ public class HttpUtil {
      * @param headers            请求头
      * @param onResponseListener 请求回调接口
      */
-    public static <T> void httpGet(String url, Map<String, Object> params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener) {
+    public static <T> void httpGet(String url, Map<String, Object> params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener, final Type type) {
         if (params != null)
             url = getParamsUrl(url, params);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (onResponseListener != null) {
-                    onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), new TypeToken<BaseResponse<T>>() {
-                    }.getType()));
+                    onResponseListener.onResponse((T) new Gson().fromJson(response.toString(), type));
                 }
             }
         }, new Response.ErrorListener() {
@@ -216,8 +214,8 @@ public class HttpUtil {
      * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
      */
-    public static <T, P> void httpPost(String url, P params, final OnResponseListener<T> onResponseListener) {
-        httpPost(url, null, params, onResponseListener);
+    public static <T, P> void httpPost(String url, P params, final OnResponseListener<T> onResponseListener, Type type) {
+        httpPost(url, null, params, onResponseListener, type);
     }
 
     /**
@@ -228,8 +226,8 @@ public class HttpUtil {
      * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
      */
-    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final OnResponseListener<T> onResponseListener) {
-        httpPost(url, pathParams, params, null, onResponseListener);
+    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final OnResponseListener<T> onResponseListener, Type type) {
+        httpPost(url, pathParams, params, null, onResponseListener, type);
     }
 
     /**
@@ -241,7 +239,7 @@ public class HttpUtil {
      * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
      */
-    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener) {
+    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener, final Type type) {
         if (params == null)
             return;
         try {
@@ -252,8 +250,7 @@ public class HttpUtil {
                         @Override
                         public void onResponse(JSONObject response) {
                             if (onResponseListener != null) {
-                                onResponseListener.onResponse((BaseResponse<T>) new Gson().fromJson(response.toString(), new TypeToken<BaseResponse<T>>() {
-                                }.getType()));
+                                onResponseListener.onResponse((T) new Gson().fromJson(response.toString(), type));
                             }
                         }
                     }, new Response.ErrorListener() {
