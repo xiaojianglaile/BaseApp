@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jimmy.common.base.app.BaseActivity;
-import com.jimmy.common.util.TemplateUtil;
+import com.jimmy.common.util.TemplateUtils;
+import com.jimmy.common.util.ToastUtils;
 import com.jimmy.friend.R;
 import com.jimmy.friend.bean.Commodity;
 import com.jimmy.friend.commodity.CommodityDetailFragment;
@@ -63,13 +64,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void dataIsNull() {
-        Toast.makeText(this, "No Data!", Toast.LENGTH_SHORT).show();
+        ToastUtils.INSTANCE.showShortToast(this, "No Data!");
     }
 
     @Override
     public void intoCommodityDetail(Commodity commodity) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(CommodityDetailFragment.COMMODITY, commodity);
-        TemplateUtil.startTemplate(this, "CommodityDetailFragment", commodity.getTitle(), bundle);
+        TemplateUtils.startTemplate(this, "CommodityDetailFragment", commodity.getTitle(), bundle);
     }
 }

@@ -9,7 +9,7 @@ import com.jimmy.common.base.app.TemplateActivity;
 /**
  * Created by Jimmy on 2016/8/26 0026.
  */
-public class TemplateUtil {
+public class TemplateUtils {
 
     public static void startTemplate(Context context, String name, String title) {
         context.startActivity(new Intent(context, TemplateActivity.class)

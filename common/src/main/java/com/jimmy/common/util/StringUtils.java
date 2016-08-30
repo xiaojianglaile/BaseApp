@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by Jimmy on 2016/8/27 0027.
  */
-public class StringUtil {
+public class StringUtils {
 
     /**
      * 获取随机字符串

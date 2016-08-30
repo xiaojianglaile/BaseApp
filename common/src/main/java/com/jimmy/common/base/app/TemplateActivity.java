@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.jimmy.common.R;
-import com.jimmy.common.util.FragmentUtil;
+import com.jimmy.common.util.BeanUtils;
 
 /**
  * Created by Jimmy on 2016/8/26 0026.
@@ -28,7 +28,7 @@ public class TemplateActivity extends BaseActivity {
     private void initFragment() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flTemplateContainer);
         if (fragment == null) {
-            fragment = FragmentUtil.getInstance(this, getIntent().getStringExtra(NAME));
+            fragment = BeanUtils.getFragment(this, getIntent().getStringExtra(NAME));
             Bundle params = getIntent().getBundleExtra(PARAMS);
             if (params != null)
                 fragment.setArguments(params);

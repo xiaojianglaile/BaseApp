@@ -25,13 +25,17 @@ import java.util.Map;
 /**
  * Created by Jimmy on 2016/7/31.
  */
-public class HttpUtil {
+public class HttpUtils {
 
     private static RequestQueue mRequestQueue;
 
-    public synchronized static void initRequestQueue(Context context) {
+    public static void initRequestQueue(Context context) {
         if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(context);
+            synchronized (HttpUtils.class) {
+                if (mRequestQueue == null) {
+                    mRequestQueue = Volley.newRequestQueue(context);
+                }
+            }
         }
     }
 
