@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void dataIsNull() {
-        ToastUtils.INSTANCE.showShortToast(this, "No Data!");
+        ToastUtils.showShortToast(this, "No Data!");
     }
 
     @Override
