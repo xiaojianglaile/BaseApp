@@ -12,8 +12,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.jimmy.common.base.net.BaseResponse;
 import com.jimmy.common.listener.OnResponseListener;
 
 import org.json.JSONException;

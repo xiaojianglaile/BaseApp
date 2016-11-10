@@ -9,13 +9,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jimmy.common.base.app.BaseFragment;
+import com.jimmy.common.base.app.TemplateFragment;
 import com.jimmy.friend.R;
 import com.jimmy.friend.bean.Commodity;
 
 /**
  * Created by Jimmy on 2016/8/27 0027.
  */
-public class CommodityDetailFragment extends BaseFragment {
+public class CommodityDetailFragment extends TemplateFragment {
 
     public static final String COMMODITY = "commodity.object";
 
