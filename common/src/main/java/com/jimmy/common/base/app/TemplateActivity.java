@@ -1,5 +1,6 @@
 package com.jimmy.common.base.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -89,6 +90,14 @@ public class TemplateActivity extends BaseActivity implements View.OnClickListen
                 ((TemplateFragment) mFragment).onRightButtonClick(v);
             }
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mFragment != null) {
+            mFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
