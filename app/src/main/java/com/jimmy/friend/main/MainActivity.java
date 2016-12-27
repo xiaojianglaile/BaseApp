@@ -71,6 +71,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void intoCommodityDetail(Commodity commodity) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(CommodityDetailFragment.COMMODITY, commodity);
-        TemplateUtils.startTemplate(this, "CommodityDetailFragment", commodity.getTitle(), bundle);
+        TemplateUtils.startTemplate(this, CommodityDetailFragment.class, commodity.getTitle(), bundle);
     }
 }

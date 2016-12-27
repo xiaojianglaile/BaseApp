@@ -36,7 +36,7 @@ public class TemplateActivity extends BaseActivity implements View.OnClickListen
     private void initFragment() {
         mFragment = getSupportFragmentManager().findFragmentById(R.id.flTemplateContainer);
         if (mFragment == null) {
-            mFragment = BeanUtils.getFragment(this, getIntent().getStringExtra(NAME));
+            mFragment = BeanUtils.getFragment(((Class) getIntent().getSerializableExtra(NAME)));
             Bundle params = getIntent().getBundleExtra(PARAMS);
             if (params != null)
                 mFragment.setArguments(params);
@@ -91,6 +91,7 @@ public class TemplateActivity extends BaseActivity implements View.OnClickListen
             }
 
         }
+
     }
 
     @Override
