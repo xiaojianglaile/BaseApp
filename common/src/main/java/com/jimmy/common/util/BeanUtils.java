@@ -16,7 +16,7 @@ public class BeanUtils {
     public static Fragment getFragment(Class name) {
         Fragment fragment;
         try {
-            fragment = (Fragment) Class.forName(name.getName()).newInstance();
+            fragment = (Fragment) name.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
             fragment = new Fragment();
