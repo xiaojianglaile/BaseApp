@@ -1,6 +1,7 @@
 package com.jimmy.common.base.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +15,13 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment {
 
     protected Activity mActivity;
+    protected Context mContext;
     private View mView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mContext = getContext();
         mView = initContentView(inflater, container);
         if (mView == null)
             throw new NullPointerException("Fragment content view is null.");
