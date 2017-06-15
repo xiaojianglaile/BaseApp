@@ -24,8 +24,8 @@ interface IViewBindData<T, VH> {
      *
      * @param holder         ViewHolder
      * @param viewType       {@link RecyclerSupportAdapter#getItemViewType(int)}
-     * @param layoutPosition position
+     * @param position position
      * @param item           data
      */
-    void onBind(VH holder, int viewType, int layoutPosition, T item);
+    void onBind(VH holder, int viewType, int position, T item);
 }

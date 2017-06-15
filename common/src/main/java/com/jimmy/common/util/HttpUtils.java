@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.jimmy.common.listener.OnResponseListener;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,6 +29,8 @@ public class HttpUtils {
 
     private static RequestQueue mRequestQueue;
 
+    private static Map<String, String> mDefaultHeader;
+
     public static void initRequestQueue(Context context) {
         if (mRequestQueue == null) {
             synchronized (HttpUtils.class) {
@@ -35,6 +39,10 @@ public class HttpUtils {
                 }
             }
         }
+    }
+
+    public static void initDefaultHeader(Map<String, String> defaultHeader) {
+        mDefaultHeader = defaultHeader;
     }
 
     /**
@@ -76,10 +84,15 @@ public class HttpUtils {
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, future, future) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    if (headers == null)
-                        return super.getHeaders();
-                    else
+                    if (headers == null) {
+                        if (mDefaultHeader == null) {
+                            return super.getHeaders();
+                        }
+                        return mDefaultHeader;
+                    } else {
+                        headers.putAll(mDefaultHeader);
                         return headers;
+                    }
                 }
             };
             mRequestQueue.add(request);
@@ -105,38 +118,43 @@ public class HttpUtils {
     /**
      * 同步Post请求
      *
-     * @param url        请求地址
-     * @param pathParams 请求参数
-     * @param params     请求参数实体类
+     * @param url    请求地址
+     * @param query  请求参数
+     * @param params 请求参数实体类
      * @return 返回数据实体类
      */
-    public static <T, P> T syncHttpPost(String url, Map<String, Object> pathParams, P params, Type type) {
-        return syncHttpPost(url, pathParams, null, params, type);
+    public static <T, P> T syncHttpPost(String url, Map<String, Object> query, P params, Type type) {
+        return syncHttpPost(url, query, null, params, type);
     }
 
     /**
      * 同步Post请求
      *
-     * @param url        请求地址
-     * @param pathParams 请求参数
-     * @param headers    请求头
-     * @param params     请求参数实体类
+     * @param url     请求地址
+     * @param query   请求参数
+     * @param headers 请求头
+     * @param params  请求参数实体类
      * @return 返回数据实体类
      */
-    public static <T, P> T syncHttpPost(String url, Map<String, Object> pathParams, final Map<String, String> headers, P params, Type type) {
+    public static <T, P> T syncHttpPost(String url, Map<String, Object> query, final Map<String, String> headers, P params, Type type) {
         try {
-            if (pathParams != null)
-                url = getParamsUrl(url, pathParams);
+            if (query != null)
+                url = getParamsUrl(url, query);
             RequestFuture future = RequestFuture.newFuture();
             Gson gson = new Gson();
             if (params != null) {
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(gson.toJson(params)), future, future) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        if (headers == null)
-                            return super.getHeaders();
-                        else
+                        if (headers == null) {
+                            if (mDefaultHeader == null) {
+                                return super.getHeaders();
+                            }
+                            return mDefaultHeader;
+                        } else {
+                            headers.putAll(mDefaultHeader);
                             return headers;
+                        }
                     }
                 };
                 mRequestQueue.add(request);
@@ -194,16 +212,21 @@ public class HttpUtils {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (onResponseListener != null) {
-                    onResponseListener.onError();
+                    onResponseListener.onError(error);
                 }
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                if (headers == null)
-                    return super.getHeaders();
-                else
+                if (headers == null) {
+                    if (mDefaultHeader == null) {
+                        return super.getHeaders();
+                    }
+                    return mDefaultHeader;
+                } else {
+                    headers.putAll(mDefaultHeader);
                     return headers;
+                }
             }
         };
         mRequestQueue.add(request);
@@ -224,29 +247,29 @@ public class HttpUtils {
      * 异步Post请求
      *
      * @param url                请求地址
-     * @param pathParams         请求参数
+     * @param query              请求参数
      * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
      */
-    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final OnResponseListener<T> onResponseListener, Type type) {
-        httpPost(url, pathParams, params, null, onResponseListener, type);
+    public static <T, P> void httpPost(String url, Map<String, Object> query, P params, final OnResponseListener<T> onResponseListener, Type type) {
+        httpPost(url, query, params, null, onResponseListener, type);
     }
 
     /**
      * 异步Post请求
      *
      * @param url                请求地址
-     * @param pathParams         请求参数
+     * @param query              请求参数
      * @param headers            请求头
      * @param params             请求参数实体类
      * @param onResponseListener 请求回调接口
      */
-    public static <T, P> void httpPost(String url, Map<String, Object> pathParams, P params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener, final Type type) {
+    public static <T, P> void httpPost(String url, Map<String, Object> query, P params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener, final Type type) {
         if (params == null)
             return;
         try {
-            if (pathParams != null)
-                url = getParamsUrl(url, pathParams);
+            if (query != null)
+                url = getParamsUrl(url, query);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(new Gson().toJson(params)),
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -259,16 +282,21 @@ public class HttpUtils {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     if (onResponseListener != null) {
-                        onResponseListener.onError();
+                        onResponseListener.onError(error);
                     }
                 }
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    if (headers == null)
-                        return super.getHeaders();
-                    else
+                    if (headers == null) {
+                        if (mDefaultHeader == null) {
+                            return super.getHeaders();
+                        }
+                        return mDefaultHeader;
+                    } else {
+                        headers.putAll(mDefaultHeader);
                         return headers;
+                    }
                 }
             };
             mRequestQueue.add(request);
@@ -276,6 +304,65 @@ public class HttpUtils {
             e.printStackTrace();
             Log.e("onErrorResponse", "Params is error.");
         }
+    }
+
+
+    /**
+     * String异步Post请求
+     *
+     * @param url                请求地址
+     * @param params              请求参数
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T> void httpPost(String url, Map<String, String> params, final OnResponseListener<T> onResponseListener, Type type) {
+        httpPost(url, params, null, onResponseListener, type);
+    }
+
+    /**
+     * String异步Post请求
+     *
+     * @param url                请求地址
+     * @param params              请求参数
+     * @param headers            请求头
+     * @param onResponseListener 请求回调接口
+     */
+    public static <T> void httpPost(String url, final Map<String, String> params, final Map<String, String> headers, final OnResponseListener<T> onResponseListener, final Type type) {
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (onResponseListener != null) {
+                            onResponseListener.onResponse((T) new Gson().fromJson(response, type));
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (onResponseListener != null) {
+                    onResponseListener.onError(error);
+                }
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                if (headers == null) {
+                    if (mDefaultHeader == null) {
+                        return super.getHeaders();
+                    }
+                    return mDefaultHeader;
+                } else {
+                    headers.putAll(mDefaultHeader);
+                    return headers;
+                }
+            }
+        };
+        mRequestQueue.add(request);
     }
 
     /**

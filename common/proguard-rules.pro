@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class com.jimmy.common.base.app.** {*;}
+-keep class com.jimmy.common.base.mvp.** {*;}
+-keep class com.jimmy.common.base.net.** {*;}
+-keep class com.jimmy.common.base.task.** {*;}
+-keep class com.jimmy.common.listener.** {*;}
+-keep class com.jimmy.common.utils.** {*;}
+-keep class com.jimmy.common.view.** {*;}

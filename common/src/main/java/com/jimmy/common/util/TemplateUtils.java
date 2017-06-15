@@ -78,12 +78,13 @@ public class TemplateUtils {
 
     /**
      * 启动模板Activity
+     *
      * @param context
-     * @param objClass 模板Activity中Fragment键名
-     * @param title 模板Activity的标题
-     * @param leftResId 模板Activity左按钮资源Id
+     * @param objClass   模板Activity中Fragment键名
+     * @param title      模板Activity的标题
+     * @param leftResId  模板Activity左按钮资源Id
      * @param rightResId 模板Activity右按钮资源Id
-     * @param params 模板Activity向Fragment传递的参数
+     * @param params     模板Activity向Fragment传递的参数
      */
     public static void startTemplate(Context context, Class objClass, String title, int leftResId, int rightResId, Bundle params) {
         context.startActivity(new Intent(context, TemplateActivity.class)
@@ -96,12 +97,13 @@ public class TemplateUtils {
 
     /**
      * 启动模板Activity
+     *
      * @param context
-     * @param objClass 模板Activity中Fragment键名
-     * @param title 模板Activity的标题
+     * @param objClass  模板Activity中Fragment键名
+     * @param title     模板Activity的标题
      * @param leftResId 模板Activity左按钮资源Id
      * @param rightText 模板Activity右按钮文字
-     * @param params 模板Activity向Fragment传递的参数
+     * @param params    模板Activity向Fragment传递的参数
      */
     public static void startTemplate(Context context, Class objClass, String title, int leftResId, String rightText, Bundle params) {
         context.startActivity(new Intent(context, TemplateActivity.class)
@@ -115,12 +117,13 @@ public class TemplateUtils {
 
     /**
      * 启动模板Activity并对返回数据做处理
+     *
      * @param activity
-     * @param objClass 模板Activity中Fragment键名
-     * @param title 模板Activity的标题
-     * @param leftResId 模板Activity左按钮资源Id
-     * @param rightResId 模板Activity右按钮资源Id
-     * @param params 模板Activity向Fragment传递的参数
+     * @param objClass    模板Activity中Fragment键名
+     * @param title       模板Activity的标题
+     * @param leftResId   模板Activity左按钮资源Id
+     * @param rightResId  模板Activity右按钮资源Id
+     * @param params      模板Activity向Fragment传递的参数
      * @param requestCode 模板Activity请求Code
      */
     public static void startTemplateForResult(Activity activity, Class objClass, String title, int leftResId, int rightResId, Bundle params, int requestCode) {
@@ -134,12 +137,13 @@ public class TemplateUtils {
 
     /**
      * 启动模板Activity并对返回数据做处理
+     *
      * @param activity
-     * @param objClass 模板Activity中Fragment键名
-     * @param title 模板Activity的标题
-     * @param leftResId 模板Activity左按钮资源Id
-     * @param rightText 模板Activity右按钮文字
-     * @param params 模板Activity向Fragment传递的参数
+     * @param objClass    模板Activity中Fragment键名
+     * @param title       模板Activity的标题
+     * @param leftResId   模板Activity左按钮资源Id
+     * @param rightText   模板Activity右按钮文字
+     * @param params      模板Activity向Fragment传递的参数
      * @param requestCode 模板Activity请求Code
      */
     public static void startTemplateForResult(Activity activity, Class objClass, String title, int leftResId, String rightText, Bundle params, int requestCode) {
@@ -150,6 +154,15 @@ public class TemplateUtils {
                 .putExtra(TemplateActivity.LEFT_RESOURCE_ID, leftResId)
                 .putExtra(TemplateActivity.RIGHT_RESOURCE_ID, -1)
                 .putExtra(TemplateActivity.RIGHT_TEXT, rightText), requestCode);
+    }
+
+    public static void startTemplateWithFlags(Context context, Class objClass, String title, int flags) {
+        context.startActivity(new Intent(context, TemplateActivity.class)
+                .putExtra(TemplateActivity.NAME, objClass)
+                .putExtra(TemplateActivity.TITLE, title)
+                .putExtra(TemplateActivity.LEFT_RESOURCE_ID, -1)
+                .putExtra(TemplateActivity.RIGHT_RESOURCE_ID, -1)
+                .addFlags(flags));
     }
 
 }

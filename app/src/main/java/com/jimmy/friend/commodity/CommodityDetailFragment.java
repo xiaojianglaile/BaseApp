@@ -27,6 +27,11 @@ public class CommodityDetailFragment extends TemplateFragment {
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     protected void bindData() {
         super.bindData();
         if (getArguments() != null) {

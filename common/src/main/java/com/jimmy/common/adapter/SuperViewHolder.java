@@ -62,7 +62,6 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
      * @param <T> Subclass of View
      * @return Child view
      */
-    @SuppressWarnings("unchecked")
     public <T extends View> T findViewById(int id) {
         View childView = childViews.get(id);
         if (childView == null) {

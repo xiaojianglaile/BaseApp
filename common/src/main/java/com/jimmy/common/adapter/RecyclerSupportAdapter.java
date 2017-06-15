@@ -35,8 +35,8 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
     int mLayoutResId;
     IMulItemViewType<T> mMulItemViewType;
 
-    private OnItemClickListener mOnItemClickListener;
-    private OnItemLongClickListener mOnItemLongClickListener;
+    private OnItemClickListener<T> mOnItemClickListener;
+    private OnItemLongClickListener<T> mOnItemLongClickListener;
 
     RecyclerView mRecyclerView;
 
@@ -99,7 +99,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
         mData = data;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -163,7 +163,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(v, viewType, holder.getAdapterPosition());
+                        mOnItemClickListener.onItemClick(mData.get(holder.getAdapterPosition()), v, viewType, holder.getAdapterPosition());
                     }
                 }
             });
@@ -171,7 +171,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
                 @Override
                 public boolean onLongClick(View v) {
                     if (mOnItemLongClickListener != null) {
-                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getAdapterPosition());
+                        mOnItemLongClickListener.onItemLongClick(mData.get(holder.getAdapterPosition()), v, viewType, holder.getAdapterPosition());
                         return true;
                     }
                     return false;

@@ -25,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
         mView = initContentView(inflater, container);
         if (mView == null)
             throw new NullPointerException("Fragment content view is null.");
+        initView();
         return mView;
     }
 
@@ -58,6 +59,8 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     protected abstract View initContentView(LayoutInflater inflater, @Nullable ViewGroup container);
 
+    protected abstract void initView();
+
     protected <VT extends View> VT searchViewById(int id) {
         if (mView == null)
             throw new NullPointerException("Fragment content view is null.");
@@ -65,6 +68,14 @@ public abstract class BaseFragment extends Fragment {
         if (view == null)
             throw new NullPointerException("This resource id is invalid.");
         return view;
+    }
+
+    public String getAppString(int id) {
+        return mActivity.getResources().getString(id);
+    }
+
+    public String getAppString(int id, Object... formatArgs) {
+        return mActivity.getResources().getString(id, formatArgs);
     }
 
 }

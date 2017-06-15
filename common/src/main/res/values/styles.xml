@@ -1,12 +1,20 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="AppTheme" parent="BaseAppTheme"/>
+
+    <style name="BaseAppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:actionBarSize">48dp</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="actionModePopupWindowStyle">?android:attr/popupWindowStyle</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="elevation">0dp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -14,9 +22,28 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlHighlight">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="DialogFullScreen" parent="DialogStyle" />
+
+    <style name="DialogStyle" parent="Theme.AppCompat.DialogWhenLarge">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:actionBarSize">48dp</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

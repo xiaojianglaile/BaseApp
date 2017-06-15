@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="app_default_border">20dp</dimen>
+    <dimen name="dialog_default_border">36dp</dimen>
+    <dimen name="app_line_height">0.5dp</dimen>
+    <dimen name="qr_code_size">185dp</dimen>
+
+</resources>

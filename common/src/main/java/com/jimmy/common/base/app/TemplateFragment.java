@@ -28,4 +28,10 @@ public abstract class TemplateFragment extends BaseFragment {
         }
     }
 
+    public void hideLeftButton() {
+        if (getActivity() != null && getActivity() instanceof TemplateActivity) {
+            getActivity().findViewById(R.id.ibTemplateLeft).setVisibility(View.GONE);
+        }
+    }
+
 }

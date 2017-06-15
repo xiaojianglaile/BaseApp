@@ -7,6 +7,6 @@ import android.view.View;
  * <p>
  * Created by Cheney on 16/2/24.
  */
-public interface OnItemLongClickListener {
-    void onItemLongClick(View itemView, int viewType, int position);
+public interface OnItemLongClickListener<T> {
+    void onItemLongClick(T data, View itemView, int viewType, int position);
 }
