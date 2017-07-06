@@ -31,7 +31,7 @@ class PageRVPresenter extends BasePresenter<IPageRV.IPageRecyclerView, IPageRV.I
             mModel.loadMoreData(dataBinding, page, size, new OnResponseListener<BaseResponse<List>>() {
                 @Override
                 public void onResponse(BaseResponse<List> response) {
-                    if (response.getCode() == 0 && response.getData() != null && response.getData().size() > 0) {
+                    if (response.getCode() == ApiCode.SUCCESS && response.getData() != null && response.getData().size() > 0) {
                         mView.insertData(response.getData());
                         mView.hideEmptyView();
                         isMore = response.getData().size() >= size;
