@@ -68,7 +68,7 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (computeVerticalScrollExtent() + computeVerticalScrollOffset() >= computeVerticalScrollRange()) {
-                    if (data != null) {
+                    if (data != null && dataBinding != null) {
                         presenter.onLoadMoreData(dataBinding);
                     }
                 }
@@ -136,7 +136,7 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
 
     public void setDataBinding(IPageDataBinding dataBinding) {
         this.dataBinding = dataBinding;
-        if (data != null) {
+        if (data != null && dataBinding != null) {
             presenter.onRefreshData(dataBinding);
         }
     }
