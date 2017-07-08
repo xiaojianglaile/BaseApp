@@ -3,7 +3,7 @@ package com.jimmy.common.view.pagerv;
 import com.android.volley.VolleyError;
 import com.jimmy.common.base.mvp.BasePresenter;
 import com.jimmy.common.base.net.BaseResponse;
-import com.jimmy.common.base.view.BaseDataBinding;
+import com.jimmy.common.base.view.IPageDataBinding;
 import com.jimmy.common.config.ApiCode;
 import com.jimmy.common.listener.OnResponseListener;
 
@@ -24,7 +24,7 @@ class PageRVPresenter extends BasePresenter<IPageRV.IPageRecyclerView, IPageRV.I
         this.size = size;
     }
 
-    void onLoadMoreData(BaseDataBinding dataBinding) {
+    void onLoadMoreData(IPageDataBinding dataBinding) {
         if (dataBinding != null && isMore && !isLoading) {
             page++;
             isLoading = true;
@@ -44,6 +44,7 @@ class PageRVPresenter extends BasePresenter<IPageRV.IPageRecyclerView, IPageRV.I
                 @Override
                 public void onError(VolleyError error) {
                     super.onError(error);
+                    mView.showEmptyView();
                     isLoading = false;
                 }
             });
@@ -51,7 +52,7 @@ class PageRVPresenter extends BasePresenter<IPageRV.IPageRecyclerView, IPageRV.I
         }
     }
 
-    void onRefreshData(BaseDataBinding dataBinding) {
+    void onRefreshData(IPageDataBinding dataBinding) {
         if (!isLoading) {
             page = 0;
             isMore = true;

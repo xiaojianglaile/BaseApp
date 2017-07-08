@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Jimmy on 2017/6/15 0015.
  */
-public interface BaseDataBinding<T> {
+public interface IPageDataBinding<T> {
 
     void onStart(int page, int size, OnResponseListener<BaseResponse<List<T>>> listener);
 

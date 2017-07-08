@@ -1,4 +1,4 @@
-package com.jimmy.common.view.pagerv;
+package com.jimmy.common.view.datarv;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,37 +12,35 @@ import android.view.View;
 
 import com.jimmy.common.R;
 import com.jimmy.common.adapter.SuperAdapter;
-import com.jimmy.common.base.view.IPageDataBinding;
+import com.jimmy.common.base.view.IDataBinding;
 
 import java.util.List;
 
 /**
- * Created by Jimmy on 2017/6/15 0015.
+ * Created by Jimmy on 2017/7/8 0008.
  */
-public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout.OnRefreshListener, IPageRV.IPageRecyclerView {
+public class DataRecyclerView extends RecyclerView implements SwipeRefreshLayout.OnRefreshListener, IDataRV.IDataRecyclerView {
 
-    private int page, size, orientation;
+    private int orientation;
     private List data;
     private SuperAdapter adapter;
-    private IPageDataBinding dataBinding;
+    private IDataBinding dataBinding;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View emptyView;
-    private PageRVPresenter presenter;
+    private DataRVPresenter presenter;
 
-    public PageRecyclerView(Context context) {
+    public DataRecyclerView(Context context) {
         this(context, null);
     }
 
-    public PageRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public DataRecyclerView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PageRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public DataRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PageRecyclerView);
-        page = array.getInt(R.styleable.PageRecyclerView_page_num, 0);
-        size = array.getInt(R.styleable.PageRecyclerView_page_size, 10);
-        orientation = array.getInt(R.styleable.PageRecyclerView_prv_orientation, VERTICAL);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.DataRecyclerView);
+        orientation = array.getInt(R.styleable.DataRecyclerView_drv_orientation, VERTICAL);
         array.recycle();
         init();
     }
@@ -53,7 +51,7 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
     }
 
     private void initPresenter() {
-        presenter = new PageRVPresenter(this, page, size);
+        presenter = new DataRVPresenter(this);
     }
 
     private void initRecyclerView() {
@@ -63,22 +61,15 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
         DefaultItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setSupportsChangeAnimations(false);
         setItemAnimator(itemAnimator);
-        addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (computeVerticalScrollExtent() + computeVerticalScrollOffset() >= computeVerticalScrollRange()) {
-                    if (data != null) {
-                        presenter.onLoadMoreData(dataBinding);
-                    }
-                }
-            }
-        });
     }
 
     @Override
-    public void insertData(List data) {
-        adapter.addAll(data);
+    public void onRefresh() {
+        if (data != null) {
+            presenter.onLoadData(dataBinding);
+        } else {
+            setRefreshingDelay(false, 1000);
+        }
     }
 
     @Override
@@ -134,19 +125,11 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
         this.emptyView = emptyView;
     }
 
-    public void setDataBinding(IPageDataBinding dataBinding) {
+    public void setDataBinding(IDataBinding dataBinding) {
         this.dataBinding = dataBinding;
         if (data != null) {
-            presenter.onRefreshData(dataBinding);
+            presenter.onLoadData(dataBinding);
         }
     }
 
-    @Override
-    public void onRefresh() {
-        if (data != null) {
-            presenter.onRefreshData(dataBinding);
-        } else {
-            setRefreshingDelay(false, 1000);
-        }
-    }
 }

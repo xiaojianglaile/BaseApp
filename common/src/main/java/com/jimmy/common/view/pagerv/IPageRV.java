@@ -3,7 +3,7 @@ package com.jimmy.common.view.pagerv;
 import com.jimmy.common.base.mvp.IBaseModel;
 import com.jimmy.common.base.mvp.IBaseView;
 import com.jimmy.common.base.net.BaseResponse;
-import com.jimmy.common.base.view.BaseDataBinding;
+import com.jimmy.common.base.view.IPageDataBinding;
 import com.jimmy.common.listener.OnResponseListener;
 
 import java.util.List;
@@ -28,8 +28,8 @@ interface IPageRV {
     }
 
     interface IPageRecyclerModel extends IBaseModel {
-        void refreshData(BaseDataBinding dataBinding, int page, int size, OnResponseListener<BaseResponse<List>> listener);
-        void loadMoreData(BaseDataBinding dataBinding, int page, int size, OnResponseListener<BaseResponse<List>> listener);
+        void refreshData(IPageDataBinding dataBinding, int page, int size, OnResponseListener<BaseResponse<List>> listener);
+        void loadMoreData(IPageDataBinding dataBinding, int page, int size, OnResponseListener<BaseResponse<List>> listener);
     }
 
 }

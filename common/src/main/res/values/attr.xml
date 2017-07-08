@@ -3,7 +3,13 @@
     <declare-styleable name="PageRecyclerView">
         <attr name="page_num" format="integer" />
         <attr name="page_size" format="integer" />
-        <attr name="orientation">
+        <attr name="prv_orientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="DataRecyclerView">
+        <attr name="drv_orientation">
             <enum name="horizontal" value="0"/>
             <enum name="vertical" value="1"/>
         </attr>
