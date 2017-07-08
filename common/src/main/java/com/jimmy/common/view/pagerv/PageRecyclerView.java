@@ -143,7 +143,7 @@ public class PageRecyclerView extends RecyclerView implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        if (data != null) {
+        if (data != null && dataBinding != null) {
             presenter.onRefreshData(dataBinding);
         } else {
             setRefreshingDelay(false, 1000);

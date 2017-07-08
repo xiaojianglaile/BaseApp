@@ -65,7 +65,7 @@ public class DataRecyclerView extends RecyclerView implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        if (data != null) {
+        if (data != null && dataBinding != null) {
             presenter.onLoadData(dataBinding);
         } else {
             setRefreshingDelay(false, 1000);
