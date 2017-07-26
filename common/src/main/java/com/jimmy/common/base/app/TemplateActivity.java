@@ -48,13 +48,13 @@ public class TemplateActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initToolBar() {
-        Toolbar tbTemplateBar = searchViewById(R.id.tbTemplateBar);
+        Toolbar tbTemplateBar = findView(R.id.tbTemplateBar);
         tbTemplateBar.setTitle("");
         setSupportActionBar(tbTemplateBar);
-        TextView tvTemplateTitle = searchViewById(R.id.tvTemplateTitle);
+        TextView tvTemplateTitle = findView(R.id.tvTemplateTitle);
         tvTemplateTitle.setText(getIntent().getStringExtra(TITLE));
-        ImageButton ibTemplateLeft = searchViewById(R.id.ibTemplateLeft);
-        ImageButton ibTemplateRight = searchViewById(R.id.ibTemplateRight);
+        ImageButton ibTemplateLeft = findView(R.id.ibTemplateLeft);
+        ImageButton ibTemplateRight = findView(R.id.ibTemplateRight);
         int leftResId = getIntent().getIntExtra(LEFT_RESOURCE_ID, -1);
         ibTemplateLeft.setImageResource(leftResId == -1 ? R.drawable.btn_back : leftResId);
         int rightResId = getIntent().getIntExtra(RIGHT_RESOURCE_ID, -1);
@@ -64,7 +64,7 @@ public class TemplateActivity extends BaseActivity implements View.OnClickListen
         } else {
             ibTemplateRight.setVisibility(View.GONE);
         }
-        TextView tvTemplateRight = searchViewById(R.id.tvTemplateRight);
+        TextView tvTemplateRight = findView(R.id.tvTemplateRight);
         String rightText = getIntent().getStringExtra(RIGHT_TEXT);
         if (rightText != null) {
             tvTemplateRight.setVisibility(View.VISIBLE);

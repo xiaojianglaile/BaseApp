@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jimmy.common.base.app.BaseFragment;
 import com.jimmy.common.base.app.TemplateFragment;
 import com.jimmy.friend.R;
 import com.jimmy.friend.bean.Commodity;
@@ -37,8 +36,8 @@ public class CommodityDetailFragment extends TemplateFragment {
         if (getArguments() != null) {
             Commodity commodity = (Commodity) getArguments().getSerializable(COMMODITY);
             if (commodity != null) {
-                Glide.with(mActivity).load(commodity.getUrl()).into((ImageView) searchViewById(R.id.ivCommodityDetailImage));
-                TextView tvCommodityDetailDesc = searchViewById(R.id.tvCommodityDetailDesc);
+                Glide.with(mActivity).load(commodity.getUrl()).into((ImageView) findView(R.id.ivCommodityDetailImage));
+                TextView tvCommodityDetailDesc = findView(R.id.tvCommodityDetailDesc);
                 tvCommodityDetailDesc.setText(commodity.getDesc());
             }
         }

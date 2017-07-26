@@ -26,8 +26,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void bindView() {
         setContentView(R.layout.activity_main);
-        rvMainCommodityList = searchViewById(R.id.rvMainCommodityList);
-        vLoading = searchViewById(R.id.vLoading);
+        rvMainCommodityList = findView(R.id.rvMainCommodityList);
+        vLoading = findView(R.id.vLoading);
     }
 
     @Override

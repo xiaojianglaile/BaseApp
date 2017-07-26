@@ -53,7 +53,7 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
      */
     @Deprecated
     public <T extends View> T getView(int id) {
-        Log.e("SuperViewHolder", "Deprecated method 'getView(int)', please use 'findViewById(int)' instead.");
+        Log.e("SuperViewHolder", "Deprecated method 'getView(int)', please use 'findView(int)' instead.");
         return findViewById(id);
     }
 

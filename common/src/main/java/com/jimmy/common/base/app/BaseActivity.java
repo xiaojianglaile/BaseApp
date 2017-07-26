@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected <VT extends View> VT searchViewById(int id) {
+    protected <VT extends View> VT findView(int id) {
         VT view = (VT) findViewById(id);
         if (view == null)
             throw new NullPointerException("This resource id is invalid.");

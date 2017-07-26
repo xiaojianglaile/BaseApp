@@ -18,11 +18,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void bindView() {
         setContentView(R.layout.activity_login);
-        etUsername = searchViewById(R.id.etUsername);
-        etPassword = searchViewById(R.id.etPassword);
-        vLoading = searchViewById(R.id.vLoading);
-        searchViewById(R.id.btnLogin).setOnClickListener(this);
-        searchViewById(R.id.btnClear).setOnClickListener(this);
+        etUsername = findView(R.id.etUsername);
+        etPassword = findView(R.id.etPassword);
+        vLoading = findView(R.id.vLoading);
+        findView(R.id.btnLogin).setOnClickListener(this);
+        findView(R.id.btnClear).setOnClickListener(this);
     }
 
     @Override

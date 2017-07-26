@@ -23,7 +23,7 @@ public abstract class TemplateFragment extends BaseFragment {
 
     public void editTemplateTitle(String title) {
         if (getActivity() != null && getActivity() instanceof TemplateActivity) {
-            TextView tvTemplateTitle = (TextView) getActivity().findViewById(R.id.tvTemplateTitle);
+            TextView tvTemplateTitle = getActivity().findViewById(R.id.tvTemplateTitle);
             tvTemplateTitle.setText(title);
         }
     }
